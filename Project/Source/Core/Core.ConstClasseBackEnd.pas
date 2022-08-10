@@ -102,13 +102,13 @@ const
                  ' '                                                                                                    + slinebreak +
                  'function *Classe*.ListaRegistro: string; '                                                            + slinebreak +
                  'var '                                                                                                 + slinebreak +
-                 '  cQuery: TQueryFD; '                                                                                 + slinebreak +
+                 '  cQuery : TQueryFD; '                                                                                + slinebreak +
                  'begin '                                                                                               + slinebreak +
-                 '  cQuery: TQueryFD.create; '                                                                          + slinebreak +
+                 '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  try '                                                                                               + slinebreak +
                  '    cQuery '                                                                                          + slinebreak +
                  '     .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE 0=0 '') '                                      + slinebreak +
-                 '       .ParametrosQuery('','') '                                                                      + slinebreak +
+                 '       .ParametrosQuery('''','''') '                                                                      + slinebreak +
                  '      .Open  '                                                                                        + slinebreak +
                  '      .DataSetToJsonArray; '                                                                          + slinebreak +
                  ' '                                                                                                    + slinebreak +
@@ -122,9 +122,9 @@ const
                  ' '                                                                                                    + slinebreak +
                  'function *Classe*.VisualizaRegistro: String; '                                                        + slinebreak +
                  'var '                                                                                                 + slinebreak +
-                 '  cQuery: TQueryFD; '                                                                                 + slinebreak +
+                 '  cQuery : TQueryFD; '                                                                                + slinebreak +
                  'begin '                                                                                               + slinebreak +
-                 '  cQuery: TQueryFD.create; '                                                                          + slinebreak +
+                 '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  try '                                                                                               + slinebreak +
                  '    cQuery '                                                                                          + slinebreak +
                  '      .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE ID = :ID'') '                                 + slinebreak +
@@ -148,9 +148,9 @@ const
                  ''' ,@Acao          = :Acao'' +              { OS PARAMETROS ACAO E CODUSUARIO  } '                    + slinebreak +
                  ''' ,@CodUsuarioReg = :CodUsuarioReg'';      { ESTA DENTRO DA CLASSE QUERYFD    } '                    + slinebreak +
                   'var '                                                                                                + slinebreak +
-                 '  cQuery: TQueryFD; '                                                                                 + slinebreak +
+                 '  cQuery : TQueryFD; '                                                                                + slinebreak +
                  'begin '                                                                                               + slinebreak +
-                 '  cQuery: TQueryFD.create; '                                                                          + slinebreak +
+                 '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  result := EmptyStr; '                                                                               + slinebreak +
                  '  try '                                                                                               + slinebreak +
                  '    if Acao <> upDelete then '                                                                        + slinebreak +

@@ -101,9 +101,7 @@ type
     procedure FormCreate(Sender: TObject);
   private
 
-     caminhoController,
-     caminhoInterfaced,
-     caminhoProviders: String;
+    caminhoController, caminhoInterfaced, caminhoProviders: String;
 
     procedure ValidaCampos;
 
@@ -117,6 +115,7 @@ var
 implementation
 
 {$R *.dfm}
+
 procedure TForm2.qrTableAfterScroll(DataSet: TDataSet);
 begin
   qrCampos.Close;
@@ -134,26 +133,26 @@ end;
 
 procedure TForm2.btnBuscaCaminhoControllerClick(Sender: TObject);
 var
-  selDir    : string;
+  selDir: string;
 begin
   SelectDirectory('Selecione uma pasta', caminhoController, selDir);
-  edtCaminhoController.Text := ifthen(selDir = EmptyStr, caminhoController,selDir+ '\') ;
+  edtCaminhoController.Text := ifthen(selDir = EmptyStr, caminhoController, selDir + '\');
 end;
 
 procedure TForm2.btnBuscaCaminhoInterfaceClick(Sender: TObject);
 var
-  selDir    : string;
+  selDir: string;
 begin
   SelectDirectory('Selecione uma pasta', caminhoInterfaced, selDir);
-  edtCaminhoInterface.Text := ifthen(selDir = EmptyStr, caminhoInterfaced,selDir+ '\') ;
+  edtCaminhoInterface.Text := ifthen(selDir = EmptyStr, caminhoInterfaced, selDir + '\');
 end;
 
 procedure TForm2.btnBuscaCaminhoProvidersClick(Sender: TObject);
 var
-  selDir    : string;
+  selDir: string;
 begin
   SelectDirectory('Selecione uma pasta', caminhoProviders, selDir);
-  edtCaminhoProvider.Text := ifthen(selDir = EmptyStr, caminhoProviders,selDir+ '\') ;
+  edtCaminhoProvider.Text := ifthen(selDir = EmptyStr, caminhoProviders, selDir + '\');
 end;
 
 procedure TForm2.Button1Click(Sender: TObject);
@@ -166,7 +165,7 @@ begin
   NomeTabela     := qrTableTABLE_NAME.Text;
 
   ValidaCampos;
-  PG.Visible:= true;
+  PG.Visible  := true;
   PG.Position := 25;
 
   if ckbInterfaced.Checked then
@@ -218,15 +217,15 @@ var
 begin
   ArquivoINI := TIniFile.Create(ExtractFileDir(Application.ExeName) + '\ConfiguracaoINI.ini');
   try
-    caminhoController :=  ArquivoINI.ReadString('backend', 'caminhoInterfaced', '');
-    caminhoInterfaced :=  ArquivoINI.ReadString('backend', 'caminhoInterfaced', '');
-    caminhoProviders  :=  ArquivoINI.ReadString('backend', 'caminhoInterfaced', '');
+    caminhoController := ArquivoINI.ReadString('backend', 'caminhoController', '');
+    caminhoInterfaced := ArquivoINI.ReadString('backend', 'caminhoInterfaced', '');
+    caminhoProviders  := ArquivoINI.ReadString('backend', 'caminhoProviders', '');
 
-    edtCaminhoInterface.Text     := caminhoInterfaced;
-    edtCaminhoController.Text    := caminhoController;
-    edtCaminhoProvider.Text      := caminhoProviders;
+    edtCaminhoInterface.Text  := caminhoInterfaced;
+    edtCaminhoController.Text := caminhoController;
+    edtCaminhoProvider.Text   := caminhoProviders;
   finally
-     FreeAndNil(ArquivoINI);
+    FreeAndNil(ArquivoINI);
   end;
 end;
 
@@ -241,7 +240,6 @@ begin
   if edtNomeUnit.Text = EmptyStr then
     raise Exception.Create('Informe o Nome da Interface');
 
-
   if ckbInterfaced.Checked then
   begin
     if not DirectoryExists(Trim(edtCaminhoInterface.Text)) then
@@ -251,7 +249,7 @@ begin
       raise Exception.Create('Já existe um arquivo com esse nome');
   end;
 
-    if ckbController.Checked then
+  if ckbController.Checked then
   begin
     if not DirectoryExists(Trim(edtCaminhoController.Text)) then
       raise Exception.Create('O diretório da Controller não existe');
