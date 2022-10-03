@@ -47,18 +47,23 @@ const
                  'type '                                                                                                + slinebreak +
                  '  *Classe* = class(TInterfacedObject, *Interface*) '                                                  + slinebreak +
                  '  private '                                                                                           + slinebreak +
-                 '    JsonResp : TJSONObject; '                                                                         + slinebreak +
+                 ' '                                                                                                    + slinebreak +
+                 '{$region ''Variaveis da Classe.''}'                                                                   + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '*Variaveis*'                                                                                          + slinebreak +
                  ' '                                                                                                    + slinebreak +
-                 '    procedure ValidaDados; '                                                                          + slinebreak +
+                 '{$endregion}'                                                                                         + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '  public '                                                                                            + slinebreak +
                  '    constructor Create; '                                                                             + slinebreak +
                  '    destructor Destroy; override; '                                                                   + slinebreak +
                  '    class function New: *Interface*; '                                                                + slinebreak +
                  ' '                                                                                                    + slinebreak +
+                 '{$region ''Declaração das funções responsavel por receber os dados da classe.''}'                     + slinebreak +
+                 ' '                                                                                                    + slinebreak +
                  '*FuncaoPublic* '                                                                                      + slinebreak +
+                 ' '                                                                                                    + slinebreak +
+                 '{$endregion}'                                                                                         + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '    function VisualizaRegistro: String;'                                                              + slinebreak +
                  '    function ListaRegistro: string;'                                                                  + slinebreak +
@@ -70,6 +75,8 @@ const
                  ' '                                                                                                    + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '{ *Classe* } '                                                                                        + slinebreak +
+                 ' '                                                                                                    + slinebreak +
+                 '{$region ''Cria a classe.''}'                                                                         + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  'class function *Classe*.New: *Interface*; '                                                           + slinebreak +
                  'begin '                                                                                               + slinebreak +
@@ -83,22 +90,15 @@ const
                  ' '                                                                                                    + slinebreak +
                  'destructor *Classe*.Destroy; '                                                                        + slinebreak +
                  'begin '                                                                                               + slinebreak +
-                 '  JsonResp.DisposeOf; '                                                                               + slinebreak +
-                  '  inherited; '                                                                                       + slinebreak +
+                 '  inherited; '                                                                                        + slinebreak +
                  'end; '                                                                                                + slinebreak +
                  ' '                                                                                                    + slinebreak +
-                 '*Funcoes* '                                                                                           + slinebreak +
+                 '{$endregion}'                                                                                         + slinebreak +
                  ' '                                                                                                    + slinebreak +
-                 'procedure *Classe*.ValidaDados; '                                                                     + slinebreak +
-                 'begin '                                                                                               + slinebreak +
-                 '//  if Acao <> upView then '                                                                          + slinebreak +
-                 '//  begin '                                                                                           + slinebreak +
-                 '//    if FNome.IsEmpty then '                                                                         + slinebreak +
-                 '//    begin '                                                                                         + slinebreak +
-                 '//      raise Exception.Create(''401 - Informe um Usuario''); '                                       + slinebreak +
-                 '//    end; '                                                                                          + slinebreak +
-                 '//  end; '                                                                                            + slinebreak +
-                 'end; '                                                                                                + slinebreak +
+                 '{$region ''Local responsavel por receber os dados necessario para classe.''}'                         + slinebreak +
+                 ' '                                                                                                    + slinebreak +
+                 '*Funcoes* '                                                                                           +
+                 '{$endregion}'                                                                                         + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  'function *Classe*.ListaRegistro: string; '                                                            + slinebreak +
                  'var '                                                                                                 + slinebreak +
@@ -106,11 +106,11 @@ const
                  'begin '                                                                                               + slinebreak +
                  '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  try '                                                                                               + slinebreak +
-                 '    cQuery '                                                                                          + slinebreak +
-                 '     .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE 0=0 '') '                                      + slinebreak +
-                 '       .ParametrosQuery('''','''') '                                                                      + slinebreak +
-                 '      .Open  '                                                                                        + slinebreak +
-                 '      .DataSetToJsonArray; '                                                                          + slinebreak +
+                 '    result := cQuery '                                                                                + slinebreak +
+                 '               .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE 0=0 '') '                            + slinebreak +
+                 '                 .ParametrosQuery('''','''') '                                                        + slinebreak +
+                 '                .Open  '                                                                              + slinebreak +
+                 '                .DataSetToJsonArray; '                                                                + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '  except '                                                                                            + slinebreak +
                  '  on E: Exception do '                                                                                + slinebreak +
@@ -126,11 +126,11 @@ const
                  'begin '                                                                                               + slinebreak +
                  '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  try '                                                                                               + slinebreak +
-                 '    cQuery '                                                                                          + slinebreak +
-                 '      .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE ID = :ID'') '                                 + slinebreak +
-                 '      .ParametrosQuery(''ID'', FID) '                                                                 + slinebreak +
-                 '    .Open  '                                                                                          + slinebreak +
-                 '    .DataSetToJsonObject;  '                                                                          + slinebreak +
+                 '    result := cQuery '                                                                                + slinebreak +
+                 '               .SQLQuery('' SELECT * FROM *SCHEMA*.*TABLE* WHERE 0=0 '') '                            + slinebreak +
+                 '                 .ParametrosQuery('''','''') '                                                        + slinebreak +
+                 '                .Open  '                                                                              + slinebreak +
+                 '                .DataSetToJsonObject; '                                                               + slinebreak +
                  ' '                                                                                                    + slinebreak +
                  '  except '                                                                                            + slinebreak +
                  '  on E: Exception do '                                                                                + slinebreak +
@@ -143,26 +143,25 @@ const
                  'function *Classe*.GravaRegistro: String; '                                                            + slinebreak +
                  'const '                                                                                               + slinebreak +
                  'SQL = '' EXEC {procedure aqui}''+ '                                                                   + slinebreak +
-                 ''' ,@ID            = :ID   ''+ '                                                                      + slinebreak +
-                 ''' ,@Ativo         = :Ativo   ''+ '                                                                   + slinebreak +
-                 ''' ,@Acao          = :Acao'' +              { OS PARAMETROS ACAO E CODUSUARIO  } '                    + slinebreak +
-                 ''' ,@CodUsuarioReg = :CodUsuarioReg'';      { ESTA DENTRO DA CLASSE QUERYFD    } '                    + slinebreak +
-                  'var '                                                                                                + slinebreak +
+                 '*sqlParam* '                                                                                          +
+                 ' ''@Acao          = :Acao,'' +              { OS PARAMETROS ACAO E CODUSUARIO  } '                    + slinebreak +
+                 ' ''@CodUsuarioReg = :CodUsuarioReg'';        { ESTA DENTRO DA CLASSE QUERYFD    } '                   + slinebreak +
+                 'var '                                                                                                 + slinebreak +
                  '  cQuery : TQueryFD; '                                                                                + slinebreak +
                  'begin '                                                                                               + slinebreak +
-                 '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
                  '  result := EmptyStr; '                                                                               + slinebreak +
+                 '  cQuery := TQueryFD.create; '                                                                        + slinebreak +
+                 '  cQuery.StartTransaction;            '                                                               + slinebreak +
                  '  try '                                                                                               + slinebreak +
-                 '    if Acao <> upDelete then '                                                                        + slinebreak +
-                 '    ValidaDados; '                                                                                    + slinebreak +
                  '    cQuery '                                                                                          + slinebreak +
                  '      .SQLQuery(SQL) '                                                                                + slinebreak +
-                 '      .ParametrosQuery(''ID'', FID)'                                                                  + slinebreak +
-                 '      .ParametrosQuery(''Ativo'', FAtivo)'                                                            + slinebreak +
+                 '*QueryParam* '                                                                                        +
                  '    .ExecSql; '                                                                                       + slinebreak +
+                 '    cQuery.Commit'                                                                                    + slinebreak +
                  '  except '                                                                                            + slinebreak +
                  '  on E: Exception do '                                                                                + slinebreak +
                  '    begin '                                                                                           + slinebreak +
+                 '      cQuery.Rollback;'                                                                               + slinebreak +
                  '      result := ValidaErro(E, Self.UnitName , ''GravaRegistro''); '                                   + slinebreak +
                  '    end; '                                                                                            + slinebreak +
                  '  end; '                                                                                              + slinebreak +
@@ -176,18 +175,23 @@ const
                  'begin '                                                                                               + slinebreak +
                  '  result := self;'                                                                                    + slinebreak +
                  '  F*Campo* := Value;'                                                                                 + slinebreak +
-                 'end;'                                                                                                 + slinebreak ;
+                 'end;'                                                                                                 + slinebreak + slinebreak;
 
      Variaveis = '    F*Campo* : *Type*;'                                                                               + slinebreak ;
 
+    QueryParam = '      .ParametrosQuery(''*Campo*'', F*Campo*)''  '                                                    + slinebreak ;
 
-
+      sqlParam = ' ''@*Campo*             = :*Campo* '' + '                                                             + slinebreak ;
 
 function GeraInterfaced(query: TFDQuery): String;
 function GeraController(query: TFDQuery): String;
 function GeraFuncaoPublic(query: TFDQuery): String;
 function GeraVariaveis(query: TFDQuery): String;
 function Gerafuncoes(query: TFDQuery): String;
+function GeraQueryParam(query: TFDQuery): String;
+function GeraSqlParam(query: TFDQuery): String;
+
+
 implementation
 
 
@@ -215,6 +219,8 @@ begin
   controller := StringReplace(controller ,'*Funcoes*'      ,Gerafuncoes(query)      ,[rfReplaceAll ,rfIgnoreCase]);
   controller := StringReplace(controller ,'*SCHEMA*'       ,NomeSchema              ,[rfReplaceAll ,rfIgnoreCase]);
   controller := StringReplace(controller ,'*TABLE*'        ,NomeTabela              ,[rfReplaceAll ,rfIgnoreCase]);
+  controller := StringReplace(controller ,'*sqlParam*'     ,GerasqlParam(query)     ,[rfReplaceAll ,rfIgnoreCase]);
+  controller := StringReplace(controller ,'*QueryParam*'   ,GeraQueryParam(query)   ,[rfReplaceAll ,rfIgnoreCase]);
   result     := controller;
 end;
 
@@ -261,6 +267,36 @@ begin
     value  := StringReplace(value ,'*Type*'      ,TypeCampo(Query.FieldByName('DATA_TYPE').AsString) ,[rfReplaceAll ,rfIgnoreCase]);
     value  := StringReplace(value ,'*Classe*'    ,NomeClasse                                         ,[rfReplaceAll ,rfIgnoreCase]);
     value  := StringReplace(value ,'*Interface*' ,NomeInterfaced                                     ,[rfReplaceAll ,rfIgnoreCase]);
+    result := result + value;
+    Query.Next;
+  end;
+end;
+
+
+function GeraSqlParam(query: TFDQuery): String;
+begin
+  Query.First;
+
+  for var count := 0 to Query.RecordCount - 1 do
+  begin
+    var
+    value  := sqlParam;
+    value  := StringReplace(value ,'*Campo*'     ,Query.FieldByName('COLUMN_NAME').AsString          ,[rfReplaceAll ,rfIgnoreCase]);
+    result := result + value;
+    Query.Next;
+  end;
+
+end;
+
+function GeraQueryParam(query: TFDQuery): String;
+begin
+  Query.First;
+
+  for var count := 0 to Query.RecordCount - 1 do
+  begin
+    var
+    value  := QueryParam;
+    value  := StringReplace(value ,'*Campo*'     ,Query.FieldByName('COLUMN_NAME').AsString          ,[rfReplaceAll ,rfIgnoreCase]);
     result := result + value;
     Query.Next;
   end;

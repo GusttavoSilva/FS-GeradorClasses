@@ -22,7 +22,7 @@ uses
             '  Core.Geral,'                                                                               + slinebreak +
             '  Controller.*NomeUnit*;'                                                                    + slinebreak +
             ''                                                                                            + slinebreak +
-            '  procedure Registry(AppSecret, Prefix, Route : String);'                                    + slinebreak +
+            '  procedure Registry(Route : String);'                                                       + slinebreak +
             '  procedure Get(Req: THorseRequest; Res: THorseResponse; Next: TProc);'                      + slinebreak +
             '  procedure GetRegistro(Req: THorseRequest; Res: THorseResponse; Next: TProc);'              + slinebreak +
             '  procedure Post(Req: THorseRequest; Res: THorseResponse; Next: TProc);'                     + slinebreak +
@@ -34,11 +34,11 @@ uses
             ''                                                                                            + slinebreak +
             'implementation'                                                                              + slinebreak +
             ''                                                                                            + slinebreak +
-            'procedure Registry(AppSecret, Prefix, Route : String);'                                      + slinebreak +
+            'procedure Registry(Route : String);'                                                         + slinebreak +
             'begin'                                                                                       + slinebreak +
             '  THorse'                                                                                    + slinebreak +
             '    .Group'                                                                                  + slinebreak +
-            '    .Prefix(Prefix)'                                                                         + slinebreak +
+            '    .Prefix(''/Api'')'                                                                       + slinebreak +
             ''                                                                                            + slinebreak +
             '      .AddCallback(HorseJWT(AppSecret, THorseJWTConfig.New.SessionClass(TMyClaims)))'        + slinebreak +
             '        .Delete(route + ''/:ID'', Delete)'                                                   + slinebreak +
@@ -89,7 +89,7 @@ uses
             ''                                                                                            + slinebreak +
             '    Res.Send(*classe*'                                                                       + slinebreak +
             '                .New'                                                                        + slinebreak +
-            '*params*'                                                                                    + slinebreak +
+            '*params*'                                                                                    +
             '                .ListaRegistro).Status(StatusCode);'                                         + slinebreak +
             ''                                                                                            + slinebreak +
             '  except'                                                                                    + slinebreak +
@@ -107,7 +107,7 @@ uses
             ''                                                                                            + slinebreak +
             '  Res.Send(*classe*'                                                                         + slinebreak +
             '              .New'                                                                          + slinebreak +
-            '*params*'                                                                                    + slinebreak +
+            '*params*'                                                                                    +
             '              .GravaRegistro).Status(StatusCode);'                                           + slinebreak +
             ''                                                                                            + slinebreak +
             'end;'                                                                                        + slinebreak +
@@ -121,7 +121,7 @@ uses
             ''                                                                                            + slinebreak +
             '  Res.Send(*classe*'                                                                         + slinebreak +
             '              .New'                                                                          + slinebreak +
-            '*params*'                                                                                    + slinebreak +
+            '*params*'                                                                                    +
             '              .GravaRegistro).Status(StatusCode);'                                           + slinebreak +
             ''                                                                                            + slinebreak +
             'end;'                                                                                        + slinebreak +
@@ -154,7 +154,7 @@ uses
 
 parametrosProvider = '                  .*Campo*(*DadosParametro*)'                                       + slinebreak ;
 
-DadosParametro     = 'dados.GetValue(''*CampoJson*'').Value' ;
+DadosParametro     = 'dados.GetValue<*type*>(''*CampoJson*'')' ;
 
 jsontext = '  *Campo*'                                                                                    + slinebreak ;
 
@@ -196,12 +196,28 @@ begin
   begin
     var
     value := parametrosProvider;
+    var
+    ValueParam := DadosParametro;
+// *Campo*(*DadosParametro*)'
+//DadosParametro     = 'dados.GetValue<*type*>(''*CampoJson*'')' ;
 
-    value := StringReplace(value, '*DadosParametro*', convertDadosParametros(DadosParametro,
-      TypeCampo(query.FieldByName('DATA_TYPE').AsString)), [rfReplaceAll, rfIgnoreCase]);
+  //  *type*
 
-    value := StringReplace(value, '*CampoJson*', UpperCase(query.FieldByName('COLUMN_NAME').AsString),
+
+        ValueParam  := StringReplace(ValueParam, '*type*', TypeCampo(query.FieldByName('DATA_TYPE').AsString), [rfReplaceAll, rfIgnoreCase]);
+
+        ValueParam := StringReplace(ValueParam, '*CampoJson*', UpperCase(query.FieldByName('COLUMN_NAME').AsString),
       [rfReplaceAll, rfIgnoreCase]);
+
+
+
+
+
+
+    value := StringReplace(value, '*DadosParametro*', ValueParam, [rfReplaceAll, rfIgnoreCase]);
+  //  value := StringReplace(DadosParametro, '*type*', TypeCampo(query.FieldByName('DATA_TYPE').AsString), [rfReplaceAll, rfIgnoreCase]);
+
+
 
     value  := StringReplace(value, '*Campo*', query.FieldByName('COLUMN_NAME').AsString, [rfReplaceAll, rfIgnoreCase]);
 
